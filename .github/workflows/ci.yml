@@ -20,7 +20,7 @@ jobs:
     secrets: inherit
     with:
       version: ${{ github.event.pull_request.head.sha || github.sha }}
-      requires_approval: ${{ github.event_name == 'push' }}
+      requires_approval: ${{ github.event_name == 'pull_request' }}
 
   deploy:
     needs: [package]
