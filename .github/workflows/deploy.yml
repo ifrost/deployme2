@@ -16,3 +16,13 @@ jobs:
       steps:
         - run: echo "version = ${{ inputs.version }}"
         - run: echo "environment = ${{ inputs.environment }}"
+    deploy1:
+      runs-on: ubuntu-latest
+      steps:
+        - run: echo "version = ${{ inputs.version }}"
+        - run: echo "environment = ${{ inputs.environment }}"
+    deploy2:
+      runs-on: ubuntu-latest
+      steps:
+        - run: echo "version = ${{ inputs.version }}"
+        - run: echo "environment = ${{ inputs.environment }}"
