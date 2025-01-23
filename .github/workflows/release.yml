@@ -25,12 +25,6 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'yarn'
-
       - name: Install dependencies
         run: yarn install --immutable
 
@@ -48,6 +42,7 @@ jobs:
 
         
   build:
+    needs: [create-new-version]
     uses: ifrost/deployme2/.github/workflows/build.yml@main
     with:
       version: ${{ needs.create-new-version.outputs.version }}
