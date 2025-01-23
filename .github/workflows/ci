@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    uses: ifrost/deployme2/.github/workflows/build.yml@main
+    with:
+      version: ${{ github.event.pull_request.head.sha || github.sha }}
+
+  package:
+    needs: [build]
+    uses: ifrost/deployme2/.github/workflows/package.yml@main
+    secrets: inherit
+    with:
+      version: ${{ github.event.pull_request.head.sha || github.sha }}
+      requires_approval: ${{ github.event_name == 'push' }}
+
+  deploy:
+    needs: [package]
+    uses: ifrost/deployme2/.github/workflows/deploy.yml@main
+    secrets: inherit
+    with:
+      version: ${{ github.event.pull_request.head.sha || github.sha }}
+      environment: ${{ github.event_name == 'push' && 'dev-no-approval' || 'dev' }}
